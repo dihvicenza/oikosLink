@@ -17,15 +17,15 @@ services:
     container_name: influx
     image: influxdb:latest
     environment:
-      - INFLUXDB_DB=db
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=admin
-      - INFLUXDB_USER=user
-      - INFLUXDB_USER_PASSWORD=user
-      - INFLUXDB_READ_USER=read_user
-      - INFLUXDB_READ_USER_PASSWORD=read_user
+      - INFLUXDB_DB=${INFLUXDB_DB}
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
+      - INFLUXDB_USER=${INFLUXDB_USER}
+      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
+      - INFLUXDB_READ_USER=${INFLUXDB_READ_USER}
+      - INFLUXDB_READ_USER_PASSWORD=${INFLUXDB_READ_USER_PASSWORD}
     ports:
-      - '8086:8086'
+      - "8086:8086"
     volumes:
       - influx-storage:/var/lib/influxdb
 
@@ -35,15 +35,35 @@ services:
     container_name: grafana
     image: grafana/grafana:latest
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
     volumes:
       - grafana-storage:/var/lib/grafana
       - ./provisioning:/var/grafana-docker/provisioning
     ports:
-      - '3000:3000'
+      - "3000:3000"
+
+  mqtt:
+    image: eclipse-mosquitto
+    hostname: mosquitto
+    container_name: mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./config:/mosquitto/config:rw
+      - ./data:/mosquitto/data:rw
+      - ./log:/mosquitto/log:rw
 
 volumes:
   grafana-storage:
   influx-storage:
   node-red-data:
+  config:
+  data:
+  log:
+
+networks:
+  default:
+    name: mqtt5-network
