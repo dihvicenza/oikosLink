@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  node-red:
+    depends_on:
+        - influx
+    container_name: nodered
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red-data:/data
+
+  influx:
+    container_name: influx
+    image: influxdb:latest
+    environment:
+      - INFLUXDB_DB=db
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+      - INFLUXDB_USER=user
+      - INFLUXDB_USER_PASSWORD=user
+      - INFLUXDB_READ_USER=read_user
+      - INFLUXDB_READ_USER_PASSWORD=read_user
+    ports:
+      - '8086:8086'
+    volumes:
+      - influx-storage:/var/lib/influxdb
+
+  grafana:
+    depends_on:
+      - influx
+    container_name: grafana
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./provisioning:/var/grafana-docker/provisioning
+    ports:
+      - '3000:3000'
+
+volumes:
+  grafana-storage:
+  influx-storage:
+  node-red-data:
