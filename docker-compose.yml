@@ -52,18 +52,17 @@ services:
       - "1883:1883"
       - "9001:9001"
     volumes:
-      - ./config:/mosquitto/config:rw
-      - ./data:/mosquitto/data:rw
-      - ./log:/mosquitto/log:rw
+      - mosquitto-storage:/var/lib/mosquitto
+      - ./mosquitto/config:/mosquitto/config:rw
+      - ./mosquitto/data:/mosquitto/data:rw
+      - ./mosquitto/log:/mosquitto/log:rw
 
 volumes:
   grafana-storage:
   influx-storage:
   node-red-data:
-  config:
-  data:
-  log:
-
+  mosquitto-storage:
+  
 networks:
   default:
     name: mqtt5-network
