@@ -10,6 +10,7 @@ services:
       - TZ=Europe/Amsterdam
     ports:
       - "1880:1880"
+      - "8883:8883"
     volumes:
       - node-red-data:/data
 

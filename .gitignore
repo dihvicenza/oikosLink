@@ -6,3 +6,4 @@ mosquitto/log/*
 mosquitto/config/passwd
 
 provisioning
+test
