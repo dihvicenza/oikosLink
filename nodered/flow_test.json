@@ -1,0 +1,454 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "0eed37fa3330c055",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "shellies/shelly1/emeter/0/power",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "e8ffcc4360b79682",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "f98deab785167da5"
+            ]
+        ]
+    },
+    {
+        "id": "f390c92d87e9d073",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "f98deab785167da5",
+        "type": "json",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 370,
+        "y": 80,
+        "wires": [
+            [
+                "dd1c94b77ff14402",
+                "93b832b009456a9b"
+            ]
+        ]
+    },
+    {
+        "id": "6ea4e1068ede8764",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test/sensor1",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 600,
+        "wires": [
+            [
+                "8d568802921e782a",
+                "e573fb8681db16d7"
+            ]
+        ]
+    },
+    {
+        "id": "8d568802921e782a",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "test/sensor2",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f907a9305a42cfa8",
+        "x": 450,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e54e25d18fc55087",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "test/sensor2",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f907a9305a42cfa8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 520,
+        "wires": [
+            [
+                "75cdbbb58d412b41"
+            ]
+        ]
+    },
+    {
+        "id": "3ac7ca3281c42617",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "75cdbbb58d412b41",
+        "type": "json",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 520,
+        "wires": [
+            [
+                "3ac7ca3281c42617"
+            ]
+        ]
+    },
+    {
+        "id": "e573fb8681db16d7",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "test/sensor1",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d58af98a272694da",
+        "x": 450,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "dd1c94b77ff14402",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "processMQTTData",
+        "func": "var val = msg.payload;\n\nvar message = {\n    measurement: \"shellyEM\",\n    payload:\n      [\n        {\n          value: val,\n        },\n        {\n          tenant_id: \"T-0000\",\n          building_id: \"B-0000\", \n          housing_id: \"H-0000\",\n          room_id: \"R-0000\",\n          device_id: \"D-0001\",\n          um: \"w\",\n          type: 1,    \n        },\n      ],  \n  };\n\nreturn message;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 80,
+        "wires": [
+            [
+                "f390c92d87e9d073",
+                "48edd9ca716521fd"
+            ]
+        ]
+    },
+    {
+        "id": "0e5b208efbec1af6",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "ddd66b2841d11436",
+        "name": "InfluxDB_Power_test",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "OikosLink",
+        "bucket": "power_data",
+        "x": 740,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ca4a3845cbd9bbc0",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "dataUpdate",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "\"0\"",
+        "payloadType": "json",
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "0cb203044421f547"
+            ]
+        ]
+    },
+    {
+        "id": "4347856ea4c9578e",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "93b832b009456a9b",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "06e633a1c1d20794",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Test",
+        "info": "For testing",
+        "x": 110,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0cb203044421f547",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "processMQTTData",
+        "func": "var message = {\n    measurement: \"shellyEM\",\n    payload:\n      [\n        {\n          value: \"0\",\n        },\n        {\n          tenant_id: \"T-0000\",\n          building_id: \"B-0000\", \n          housing_id: \"H-0000\",\n          room_id: \"R-0000\",\n          device_id: \"D-0001\",\n          um: \"w\",\n          type: 1,    \n        },\n      ],  \n  };\n\nreturn message;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 420,
+        "wires": [
+            [
+                "4347856ea4c9578e",
+                "0e5b208efbec1af6"
+            ]
+        ]
+    },
+    {
+        "id": "48edd9ca716521fd",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "ddd66b2841d11436",
+        "name": "InfluxDB_Power_test",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "OikosLink",
+        "bucket": "power_data",
+        "x": 800,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e8ffcc4360b79682",
+        "type": "mqtt-broker",
+        "name": "docker-mosquitto",
+        "broker": "172.20.0.2",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f907a9305a42cfa8",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Broker",
+        "broker": "ssl://f1e5de0baef3491a9152efa9e03ea306.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "ac3d9944877fdcc0",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d58af98a272694da",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Public",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ddd66b2841d11436",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "admin",
+        "usetls": false,
+        "tls": "ac3d9944877fdcc0",
+        "influxdbVersion": "2.0",
+        "url": "http://172.20.0.3:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "ac3d9944877fdcc0",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "isrgrootx1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    }
+]
