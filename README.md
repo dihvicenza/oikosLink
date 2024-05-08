@@ -48,9 +48,23 @@ Per aggiungere credenziali utenti (sub o pub), aggiungere la coppia <nome utente
 
     $ docker exec mqtt mosquitto_passwd -U /mosquitto/config/passwd
 
-# TO DO
+Configurazione frequenza di campionamento:Per dispositivi shelly, il default è 30 secondi. Per modificare, usare GET 192.168.10.200/settings/?mqtt_update_period=60.
 
-- Implementare Secrets al posto di variabili d'ambiente
+Topic a disposizione:
+
+- shellies/shelly1/relay/0
+- shellies/shelly1/emeter/0/power
+- shellies/shelly1/emeter/0/reactive_power
+- shellies/shelly1/emeter/0/pf
+- shellies/shelly1/emeter/0/voltage
+- shellies/shelly1/emeter/0/total 
+- shellies/shelly1/emeter/0/total_returned
+- shellies/shelly1/emeter/1/power 
+- shellies/shelly1/emeter/1/reactive_power
+- shellies/shelly1/emeter/1/pf 
+- shellies/shelly1/emeter/1/voltage 
+- shellies/shelly1/emeter/1/total 
+- shellies/shelly1/emeter/1/total_returned
 
 # Risorse
 - Docker e NodeRed: https://nodered.org/docs/getting-started/docker

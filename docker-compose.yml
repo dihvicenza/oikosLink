@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   node-red:
     depends_on:
@@ -17,6 +15,8 @@ services:
   influx:
     container_name: influx
     image: influxdb:latest
+    env_file:
+      - .env
     environment:
       - INFLUXDB_DB=${INFLUXDB_DB}
       - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}
@@ -29,20 +29,6 @@ services:
       - "8086:8086"
     volumes:
       - influx-storage:/var/lib/influxdb
-
-  grafana:
-    depends_on:
-      - influx
-    container_name: grafana
-    image: grafana/grafana:latest
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      - ./provisioning:/var/grafana-docker/provisioning
-    ports:
-      - "3000:3000"
 
   mqtt:
     image: eclipse-mosquitto
@@ -59,7 +45,6 @@ services:
       - ./mosquitto/log:/mosquitto/log:rw
 
 volumes:
-  grafana-storage:
   influx-storage:
   node-red-data:
   mosquitto-storage:
