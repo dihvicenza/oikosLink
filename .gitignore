@@ -4,6 +4,7 @@
 mosquitto/data/*
 mosquitto/log/*
 mosquitto/config/passwd
+node-red-data/*
 
 provisioning
 test
