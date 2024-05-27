@@ -68,6 +68,8 @@ Da lì è possibile impostare alcuni nodi essenziali:
 - il nodo che invia dati a InfluxDB, il cui server avrà il seguente formato: `172.18.0.3:8086`, con access token generato tramite l'interfaccia web InfluxDB. 
 - rateLimit: il nodo che stabilisce la frequenza di invio al server di un'applicazione esterna (es. ogni 10s) tramite HTTP POST
 
+Su Windows, in particolare, sarà necessario controllare le configurazioni di rete: Che il firewall non blocchi l'app Docker e che siano impostate regole del firewall per le porte 1883, 9001 per la rete in uso. 
+
 ## InfluxDB
 
 Se nuovo, il database sarà da configurare con un bucket dedicato per i dati di interesse, es. `power_data`. Dall'interfaccia web è possibile generare query e visualizzazioni. Si consiglia di impostare un tempo di ritenuta di 7gg. 
