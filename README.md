@@ -39,7 +39,9 @@ Per la configurazione, inserire l'indirizzo IP del PC che contiene il broker, co
 
 Per aggiungere credenziali utenti (sub o pub), aggiungere la coppia <nome utente>:<password> al file mosquitto/config/passwd. Dopodiché, eseguire il seguente comando per crittografare il file: 
 
-    $ docker exec mqtt mosquitto_passwd -U /mosquitto/config/passwd
+    $ mosquitto_passwd -U mosquitto/config/passwd 
+
+Infine, ricaricare il container. 
 
 La frequenza di acquisizione di default è di 30 secondi. Per modificare, usare GET `<IP dispositivo>`/settings/?mqtt_update_period=`<tempo in secondi>`.
 
