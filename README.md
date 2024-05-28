@@ -12,6 +12,10 @@ Installare la repo localmente. Adattare in base al sistema operativo (il seguent
 
 ## Avviare i container
 
+Crea network custom locale:
+
+    $ docker network create --subnet=172.18.0.0/16 docker_network 
+    
     $ docker-compose up -d
 
 Questo comando avvia i seguenti container:

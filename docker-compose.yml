@@ -4,6 +4,9 @@ services:
         - influxdb
     container_name: nodered
     image: nodered/node-red:latest
+    networks:
+      docker_network:
+        ipv4_address: 172.27.0.2
     environment:
       - TZ=Europe/Amsterdam
     ports:
@@ -16,6 +19,9 @@ services:
   influxdb:
     container_name: influxdb
     image: influxdb:latest
+    networks:
+      docker_network:
+        ipv4_address: 172.27.0.3
     env_file:
       - .env
     ports:
@@ -28,6 +34,9 @@ services:
     image: eclipse-mosquitto
     hostname: mosquitto
     container_name: mqtt
+    networks:
+      docker_network:
+        ipv4_address: 172.27.0.4
     ports:
       - "1883:1883"
       - "9001:9001"
@@ -44,5 +53,5 @@ volumes:
   mosquitto-storage:
   
 networks:
-  default:
-    name: mqtt5-network
+  docker_network:
+    external: true
